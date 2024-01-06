@@ -17,8 +17,8 @@ public class TestController {
         producer.sendMessage();
     }
 
-    @GetMapping("/sendAnotherMessage")
+    /*@GetMapping("/sendAnotherMessage")
     public void sendAnotherMessage() {
         producer.sendAnotherMessage();
-    }
+    }*/
 }

@@ -18,20 +18,20 @@ public class Producer {
     public void sendMessage() {
         Message<Object> message;
         message = MessageBuilder.withPayload((Object) "Hello World")
-                .setHeader(KafkaHeaders.TOPIC, "humanTasks")
+                .setHeader(KafkaHeaders.TOPIC, "ioevent-human-task")
                 .setHeader(KafkaHeaders.KEY, "first message")
                 .setHeader("customHeader", "customHeaderTest")
                 .build();
         kafkaTemplate.send(message);
     }
 
-    public void sendAnotherMessage() {
+    /*public void sendAnotherMessage() {
         Message<HumanTaskInfos> message;
         message = MessageBuilder.withPayload((new HumanTaskInfos("1","stepName")))
-                .setHeader(KafkaHeaders.TOPIC, "humanTasks")
+                .setHeader(KafkaHeaders.TOPIC, "ioevent-human-task")
                 .setHeader(KafkaHeaders.KEY, "second message")
                 .setHeader("customHeader", "customHeaderTest2")
                 .build();
         kafkaTemplate.send(message);
-    }
+    }*/
 }
