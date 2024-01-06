@@ -1,1 +1,8 @@
-
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      properties:
+        spring.json.trusted.packages: '*'
+  application:
+    name: testHumanTask
