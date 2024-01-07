@@ -6,3 +6,6 @@ spring:
         spring.json.trusted.packages: '*'
   application:
     name: testHumanTask
+servers:
+  elasticsearch:
+    url: http://localhost:9200

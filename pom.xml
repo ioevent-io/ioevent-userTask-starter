@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.ioevent</groupId>
 	<artifactId>ioevent-human-task-handler-starter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>ioevent-human-task-handler-starter</name>
 	<description>Complementary project to ioevent Spring Boot Starter that can handle human tasks and unblock workflows</description>
 	<properties>

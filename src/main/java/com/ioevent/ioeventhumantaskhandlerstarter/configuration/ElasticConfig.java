@@ -22,11 +22,11 @@ import java.net.URL;
 
 @Configuration
 public class ElasticConfig {
-    @Value("${elasticsearch.url}")
+    @Value("${servers.elasticsearch.url}")
     private String elasticsearchUrl;
-    @Value("${elasticsearch.username:}")
+    @Value("${servers.elasticsearch.username:}")
     private String elasticsearchUsername;
-    @Value("${elasticsearch.password:}")
+    @Value("${servers.elasticsearch.password:}")
     private String elasticsearchPassword;
 
     public RestClientBuilder httpClientBuilder() throws MalformedURLException {

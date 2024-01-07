@@ -2,7 +2,7 @@ package com.ioevent.ioeventhumantaskhandlerstarter.listner;
 
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
-import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRespository;
+import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,10 +17,10 @@ import java.util.UUID;
 @Slf4j
 @Configuration
 public class EventListner {
-    private final HumanTaskInfosRespository humanTaskInfosRespository;
+    private final HumanTaskInfosRepository humanTaskInfosRepository;
 
-    public EventListner(HumanTaskInfosRespository humanTaskInfosRespository) {
-        this.humanTaskInfosRespository = humanTaskInfosRespository;
+    public EventListner(HumanTaskInfosRepository humanTaskInfosRepository) {
+        this.humanTaskInfosRepository = humanTaskInfosRepository;
     }
 
     @KafkaListener(groupId = "testgroup_id",id = "idTest",topics = "Samples-ioevent-human-task", containerFactory = "kafkaListenerContainerFactory")
@@ -43,6 +43,7 @@ public class EventListner {
                     .isImplicitStart((Boolean) message.getHeaders().get(IOEventHeaders.IMPLICIT_START.toString()))
                     .isImplicitEnd((Boolean) message.getHeaders().get(IOEventHeaders.IMPLICIT_END.toString()))
                     .outputs((Map<String, String>) message.getHeaders().get("OUTPUTS"))
+                    .appName(message.getHeaders().get("APPNAME").toString())
                     .input((List<String>) message.getHeaders().get(IOEventHeaders.INPUT.toString()))
                     .payload(new String(message.getPayload()))
                     .rawPayload(message.getPayload())
@@ -51,7 +52,7 @@ public class EventListner {
             humanTaskInfosList.add(humanTaskInfos);
         });
 
-     humanTaskInfosRespository.saveAll(humanTaskInfosList);
+     humanTaskInfosRepository.saveAll(humanTaskInfosList);
     }
 
     /*@KafkaListener(groupId = "testgroup_id1",id = "idTest1",topics = "Samples-ioevent-human-task", containerFactory = "kafkaListenerContainerFactory2")

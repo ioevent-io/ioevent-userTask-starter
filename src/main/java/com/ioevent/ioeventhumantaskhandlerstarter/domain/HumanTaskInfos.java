@@ -11,15 +11,16 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @Builder
-@Document(indexName = "#{@environment.getProperty('servers.elasticsearch.prefix','')}humanTask")
+@Document(indexName = "#{@environment.getProperty('servers.elasticsearch.prefix','')}human-task")
 public class HumanTaskInfos {
     @Id
     private String id;
+    private String appName;
     private String processName;
     private String correlationId;
     private String eventType;
     private List<String> input;
-    Map<String ,String> outputs;
+    private Map<String ,String> outputs;
     private String stepName;
     private String apiKey;
     private Long startTime;
