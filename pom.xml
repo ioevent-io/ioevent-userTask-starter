@@ -51,7 +51,7 @@
 	</dependencies>
 
 	<build>
-		<plugins>
+		<!--<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -61,7 +61,7 @@
 					</image>
 				</configuration>
 			</plugin>
-		</plugins>
+		</plugins> -->
 	</build>
 
 </project>

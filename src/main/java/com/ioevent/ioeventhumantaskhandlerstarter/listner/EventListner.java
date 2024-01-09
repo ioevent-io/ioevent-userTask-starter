@@ -1,9 +1,11 @@
 package com.ioevent.ioeventhumantaskhandlerstarter.listner;
 
+import com.ioevent.ioeventhumantaskhandlerstarter.configuration.IOEventProperties;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
 import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.Message;
@@ -22,8 +24,7 @@ public class EventListner {
     public EventListner(HumanTaskInfosRepository humanTaskInfosRepository) {
         this.humanTaskInfosRepository = humanTaskInfosRepository;
     }
-
-    @KafkaListener(groupId = "testgroup_id",id = "idTest",topics = "Samples-ioevent-human-task", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(groupId = "#{getGroupId}",id = "idTest",topics = "#{getApplicationName}", containerFactory = "kafkaListenerContainerFactory")
     public void onEvent(@Payload List<Message<byte[]>> messages){
         List<HumanTaskInfos> humanTaskInfosList = new ArrayList<>();
         messages.forEach(message -> {
