@@ -1,11 +1,9 @@
 package com.ioevent.ioeventhumantaskhandlerstarter.listner;
 
-import com.ioevent.ioeventhumantaskhandlerstarter.configuration.IOEventProperties;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
 import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.Message;
@@ -56,8 +54,4 @@ public class EventListner {
      humanTaskInfosRepository.saveAll(humanTaskInfosList);
     }
 
-    /*@KafkaListener(groupId = "testgroup_id1",id = "idTest1",topics = "Samples-ioevent-human-task", containerFactory = "kafkaListenerContainerFactory2")
-    public void onEvent2(@Payload List<HumanTaskInfos> messages){
-        messages.forEach(message -> log.info("Message received with json deserializer: {}", message.toString()));
-    }*/
 }

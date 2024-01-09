@@ -1,6 +1,5 @@
 package com.ioevent.ioeventhumantaskhandlerstarter.producer;
 
-import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -25,13 +24,4 @@ public class Producer {
         kafkaTemplate.send(message);
     }
 
-    /*public void sendAnotherMessage() {
-        Message<HumanTaskInfos> message;
-        message = MessageBuilder.withPayload((new HumanTaskInfos("1","stepName")))
-                .setHeader(KafkaHeaders.TOPIC, "ioevent-human-task")
-                .setHeader(KafkaHeaders.KEY, "second message")
-                .setHeader("customHeader", "customHeaderTest2")
-                .build();
-        kafkaTemplate.send(message);
-    }*/
 }
