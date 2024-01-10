@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -20,5 +21,8 @@ public class HumanTaskInfosServiceImpl implements HumanTaskInfosService{
     }
     public List<HumanTaskInfos> getByProcessName(String processName){
         return humanTaskInfosRepository.findByProcessName(processName);
+    }
+    public Optional<HumanTaskInfos> getById(String id){
+        return humanTaskInfosRepository.findById(id);
     }
 }

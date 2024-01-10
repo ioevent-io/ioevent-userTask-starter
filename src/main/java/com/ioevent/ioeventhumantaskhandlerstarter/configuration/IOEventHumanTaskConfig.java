@@ -5,6 +5,9 @@ import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRepos
 import com.ioevent.ioeventhumantaskhandlerstarter.rest.Controller;
 import com.ioevent.ioeventhumantaskhandlerstarter.service.HumanTaskInfosService;
 import com.ioevent.ioeventhumantaskhandlerstarter.service.HumanTaskInfosServiceImpl;
+
+import com.ioevent.ioeventhumantaskhandlerstarter.service.MessageProducerService;
+import com.ioevent.ioeventhumantaskhandlerstarter.service.MessageProducerServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +30,7 @@ public class IOEventHumanTaskConfig {
     private String groupId;
 
     private final HumanTaskInfosRepository humanTaskInfosRepository;
+    //private final HumanTaskInfosService humanTaskInfosService;
     @Bean
     public IOEventProperties ioEventProperties() {
         return new IOEventProperties();
@@ -49,6 +53,10 @@ public class IOEventHumanTaskConfig {
     @Bean
     public Controller controller() {
         return new Controller();
+    }
+    @Bean
+    public MessageProducerService messageProducerService(){
+        return new MessageProducerServiceImpl();
     }
 
 
