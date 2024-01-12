@@ -31,6 +31,8 @@ public class HumanTaskInfos {
     private Boolean isImplicitEnd = false;
     private String payload;
     private byte[] rawPayload;
+    @Builder.Default
+    private Boolean active= true;
     //private String outputEvent;
     //private String sourceTopic;
 }

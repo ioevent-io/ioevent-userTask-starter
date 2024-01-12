@@ -8,13 +8,18 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HumanTaskInfosRepository extends ElasticsearchRepository<HumanTaskInfos, String> {
-    List<HumanTaskInfos> findAll();
+    List<HumanTaskInfos> findAllByActiveTrue();
     @Query("{\"term\": {\"processName.keyword\": {\"value\": \"?0\"}}}")
     Page<HumanTaskInfos> findByProcessName(String processName, Pageable pageable);
 
     @Query("{\"term\": {\"processName.keyword\": {\"value\": \"?0\"}}}")
     List<HumanTaskInfos> findByProcessName(String processName);
+
+    List<HumanTaskInfos> findByProcessNameAndActiveTrue(String processName);
+
+    Optional<HumanTaskInfos> findByIdAndActiveTrue(String id);
 }

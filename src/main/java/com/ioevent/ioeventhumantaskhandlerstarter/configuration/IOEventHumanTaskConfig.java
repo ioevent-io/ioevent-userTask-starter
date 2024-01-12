@@ -1,5 +1,6 @@
 package com.ioevent.ioeventhumantaskhandlerstarter.configuration;
 
+import com.ioevent.ioeventhumantaskhandlerstarter.configuration.swagger.SwaggerConfig;
 import com.ioevent.ioeventhumantaskhandlerstarter.listner.EventListner;
 import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRepository;
 import com.ioevent.ioeventhumantaskhandlerstarter.rest.Controller;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @EnableElasticsearchRepositories(basePackages = "com.ioevent.ioeventhumantaskhandlerstarter.repository")
-@Import({KafkaConfig.class, ElasticConfig.class, EventListner.class})
+@Import({KafkaConfig.class, ElasticConfig.class, EventListner.class, SwaggerConfig.class})
 public class IOEventHumanTaskConfig {
     @Value("${ioevent.application_name:}")
     private String applicationName;
@@ -30,7 +31,6 @@ public class IOEventHumanTaskConfig {
     private String groupId;
 
     private final HumanTaskInfosRepository humanTaskInfosRepository;
-    //private final HumanTaskInfosService humanTaskInfosService;
     @Bean
     public IOEventProperties ioEventProperties() {
         return new IOEventProperties();

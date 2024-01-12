@@ -2,16 +2,21 @@ package com.ioevent.ioeventhumantaskhandlerstarter.service;
 
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 @Service
+@Slf4j
 public class MessageProducerServiceImpl implements MessageProducerService{
     @Autowired
     private HumanTaskInfosService humanTaskInfosService;
@@ -25,7 +30,20 @@ public class MessageProducerServiceImpl implements MessageProducerService{
             humanTaskInfos = humanTaskInfosService.getById(id).get();
         }
         for(String value: humanTaskInfos.getOutputs().keySet()){
-            kafkaTemplate.send(buildMessage(humanTaskInfos, payload, humanTaskInfos.getOutputs().get(value), value,customHeaders,outputString));
+            CompletableFuture<SendResult<String,Object>> future = new CompletableFuture<>();
+            future = kafkaTemplate.send(buildMessage(humanTaskInfos, payload, humanTaskInfos.getOutputs().get(value), value,customHeaders,outputString));
+            future.whenComplete(new BiConsumer<SendResult<String, Object>, Throwable>() {
+                @Override
+                public void accept(SendResult<String, Object> result, Throwable throwable) {
+                    if(throwable != null){
+                        log.error("Error while sending message to kafka", throwable);
+                    }
+                    else{
+                        humanTaskInfosService.deactivateHumanTask(id);
+                        log.info("Human Task finished successfully");
+                    }
+                }
+            });
         }
 
         return "Event sent successfully";

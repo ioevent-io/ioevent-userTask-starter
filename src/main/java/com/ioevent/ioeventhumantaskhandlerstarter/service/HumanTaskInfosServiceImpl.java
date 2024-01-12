@@ -17,12 +17,19 @@ public class HumanTaskInfosServiceImpl implements HumanTaskInfosService{
         this.humanTaskInfosRepository = humanTaskInfosRepository;
     }
     public List<HumanTaskInfos> getAll() {
-        return humanTaskInfosRepository.findAll();
-    }
-    public List<HumanTaskInfos> getByProcessName(String processName){
-        return humanTaskInfosRepository.findByProcessName(processName);
+        return humanTaskInfosRepository.findAllByActiveTrue();
     }
     public Optional<HumanTaskInfos> getById(String id){
-        return humanTaskInfosRepository.findById(id);
+        return humanTaskInfosRepository.findByIdAndActiveTrue(id);
+    }
+    public List<HumanTaskInfos> getByProcessNameAndActiveTrue(String processName){
+        return humanTaskInfosRepository.findByProcessNameAndActiveTrue(processName);
+    }
+    public void deactivateHumanTask(String id){
+        Optional<HumanTaskInfos> humanTaskInfos = humanTaskInfosRepository.findByIdAndActiveTrue(id);
+        if(humanTaskInfos.isPresent()){
+            humanTaskInfos.get().setActive(false);
+            humanTaskInfosRepository.save(humanTaskInfos.get());
+        }
     }
 }

@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface HumanTaskInfosService {
     List<HumanTaskInfos> getAll();
-
-    List<HumanTaskInfos> getByProcessName(String processName);
     Optional<HumanTaskInfos> getById(String id);
+
+    List<HumanTaskInfos> getByProcessNameAndActiveTrue(String processName);
+    void deactivateHumanTask(String id);
 }

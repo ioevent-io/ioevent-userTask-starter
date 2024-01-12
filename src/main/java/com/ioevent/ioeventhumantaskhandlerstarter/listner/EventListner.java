@@ -41,6 +41,7 @@ public class EventListner {
                     .instanceStartTime(((Long) message.getHeaders().get(IOEventHeaders.START_INSTANCE_TIME.toString())))
                     .isImplicitStart((Boolean) message.getHeaders().get(IOEventHeaders.IMPLICIT_START.toString()))
                     .isImplicitEnd((Boolean) message.getHeaders().get(IOEventHeaders.IMPLICIT_END.toString()))
+                    .active(true)
                     .outputs((Map<String, String>) message.getHeaders().get("OUTPUTS"))
                     .appName(message.getHeaders().get("APPNAME").toString())
                     .input((List<String>) message.getHeaders().get(IOEventHeaders.INPUT.toString()))
