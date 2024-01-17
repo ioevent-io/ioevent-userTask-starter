@@ -6,14 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
+import java.util.Optional;
+
 
 @Service
 @Slf4j
@@ -25,26 +24,22 @@ public class MessageProducerServiceImpl implements MessageProducerService{
 
     @Override
     public String sendMessage(String id, Object payload, Map<String, String> customHeaders, String outputString) {
-        HumanTaskInfos humanTaskInfos = null;
-        if(humanTaskInfosService.getById(id).isPresent()){
-            humanTaskInfos = humanTaskInfosService.getById(id).get();
+        Optional<HumanTaskInfos> humanTaskInfos = humanTaskInfosService.getById(id);
+        HumanTaskInfos humanTaskInfosToSend = new HumanTaskInfos();
+        if(humanTaskInfos.isPresent()){
+            humanTaskInfosToSend = humanTaskInfos.get();
         }
-        for(String value: humanTaskInfos.getOutputs().keySet()){
-            CompletableFuture<SendResult<String,Object>> future = new CompletableFuture<>();
-            future = kafkaTemplate.send(buildMessage(humanTaskInfos, payload, humanTaskInfos.getOutputs().get(value), value,customHeaders,outputString));
-            future.whenComplete(new BiConsumer<SendResult<String, Object>, Throwable>() {
-                @Override
-                public void accept(SendResult<String, Object> result, Throwable throwable) {
-                    if(throwable != null){
-                        log.error("Error while sending message to kafka", throwable);
-                    }
-                    else{
-                        humanTaskInfosService.deactivateHumanTask(id);
-                        log.info("Human Task finished successfully");
-                    }
-                }
-            });
-        }
+
+        HumanTaskInfos finalHumanTaskInfosToSend = humanTaskInfosToSend;
+        kafkaTemplate.executeInTransaction(t -> {
+            finalHumanTaskInfosToSend.getOutputs().keySet().forEach(
+                    i -> kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, finalHumanTaskInfosToSend.getOutputs().get(i), i, customHeaders, outputString))
+
+            );
+            return "Event sent successfully";
+        });
+
+        humanTaskInfosService.deactivateHumanTask(id);
 
         return "Event sent successfully";
     }
