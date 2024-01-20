@@ -4,6 +4,7 @@ import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -22,7 +23,12 @@ public class MessageProducerServiceImpl implements MessageProducerService{
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    @Override
+    @Value("${ioevent.application_name:}")
+    private String applicationName;
+
+    @Value("${ioevent.prefix:}")
+    private String prefix;
+    /*@Override
     public String sendMessage(String id, Object payload, Map<String, String> customHeaders, String outputString) {
         Optional<HumanTaskInfos> humanTaskInfos = humanTaskInfosService.getById(id);
         HumanTaskInfos humanTaskInfosToSend = new HumanTaskInfos();
@@ -42,7 +48,25 @@ public class MessageProducerServiceImpl implements MessageProducerService{
         humanTaskInfosService.deactivateHumanTask(id);
 
         return "Event sent successfully";
+    }*/
+
+    @Override
+    public String sendMessage(String id, Object payload, Map<String, String> customHeaders, String outputString) {
+        Optional<HumanTaskInfos> humanTaskInfos = humanTaskInfosService.getById(id);
+        HumanTaskInfos humanTaskInfosToSend = new HumanTaskInfos();
+        if(humanTaskInfos.isPresent()){
+            humanTaskInfosToSend = humanTaskInfos.get();
+        }
+
+        HumanTaskInfos finalHumanTaskInfosToSend = humanTaskInfosToSend;
+        kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-human-task-Response", humanTaskInfosToSend.getStepName()+"-human", customHeaders, outputString));
+        humanTaskInfosService.deactivateHumanTask(id);
+
+        return "Event sent successfully";
     }
+
+
+
 
     private Message<Object> buildMessage(HumanTaskInfos humanTaskInfos, Object payload,String topic, String key, Map<String, String> customHeaders, String outputString) {
         return MessageBuilder

@@ -50,4 +50,14 @@ public class Controller {
         }
         return messageProducerService.sendMessage(id, payload,customHeaders,"outputString");
     }
+
+    /*@Operation(summary = "Finishing a waiting human task by giving the id and the payload as a required parameters " +
+            "and the customHeaders and the outputString as optional parameters")
+    @PostMapping("/complete-task-response")
+    public String resumeUserTask1(@RequestParam String id,@RequestBody Object payload,@RequestPart(value = "customHeaders",required = false) Map<String,String> customHeaders) {
+        if(payload == null){
+            return "The payload is required";
+        }
+        return messageProducerService.sendMessage1(id, payload,customHeaders,"outputString");
+    }*/
 }

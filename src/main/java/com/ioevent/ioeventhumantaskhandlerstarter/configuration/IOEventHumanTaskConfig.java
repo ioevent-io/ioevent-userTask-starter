@@ -30,6 +30,9 @@ public class IOEventHumanTaskConfig {
     @Value("${ioevent.group_id:ioevent:}")
     private String groupId;
 
+    @Value("${ioevent.prefix:}")
+    private String prefix;
+
     private final HumanTaskInfosRepository humanTaskInfosRepository;
     @Bean
     public IOEventProperties ioEventProperties() {
@@ -37,7 +40,7 @@ public class IOEventHumanTaskConfig {
     }
     @Bean
     String getApplicationName() {
-        return applicationName+"_"+"ioevent-human-task";
+        return prefix+"-"+applicationName+"_"+"ioevent-human-task";
     }
 
     @Bean
