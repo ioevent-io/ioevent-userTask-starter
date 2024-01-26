@@ -22,4 +22,6 @@ public interface HumanTaskInfosRepository extends ElasticsearchRepository<HumanT
     List<HumanTaskInfos> findByProcessNameAndActiveTrue(String processName);
 
     Optional<HumanTaskInfos> findByIdAndActiveTrue(String id);
+
+    List<HumanTaskInfos> findByProcessNameAndStepNameAndActiveTrue(String processName, String stepName);
 }

@@ -12,4 +12,8 @@ public interface HumanTaskInfosService {
 
     List<HumanTaskInfos> getByProcessNameAndActiveTrue(String processName);
     void deactivateHumanTask(String id);
+
+    HumanTaskInfos save(HumanTaskInfos humanTaskInfos);
+
+    void saveAll(List<HumanTaskInfos> humanTaskInfos);
 }

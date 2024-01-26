@@ -59,7 +59,11 @@ public class MessageProducerServiceImpl implements MessageProducerService{
         }
 
         HumanTaskInfos finalHumanTaskInfosToSend = humanTaskInfosToSend;
-        kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-human-task-Response", humanTaskInfosToSend.getStepName()+"-human", customHeaders, outputString));
+        String outputEvent = finalHumanTaskInfosToSend.getOutputEvent()+"-human";
+        if(finalHumanTaskInfosToSend.getIsImplicitStart()){
+            outputEvent = finalHumanTaskInfosToSend.getStepName()+"-human";
+        }
+        kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-human-task-Response", outputEvent, customHeaders, outputString));
         humanTaskInfosService.deactivateHumanTask(id);
 
         return "Event sent successfully";

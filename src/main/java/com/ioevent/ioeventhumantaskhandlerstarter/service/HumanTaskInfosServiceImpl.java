@@ -32,4 +32,29 @@ public class HumanTaskInfosServiceImpl implements HumanTaskInfosService{
             humanTaskInfosRepository.save(humanTaskInfos.get());
         }
     }
+
+    public HumanTaskInfos save(HumanTaskInfos humanTaskInfos){
+        if (humanTaskInfos.getIsImplicitStart()){
+            List<HumanTaskInfos> humanTaskInfosList = humanTaskInfosRepository.findByProcessNameAndStepNameAndActiveTrue(humanTaskInfos.getProcessName(), humanTaskInfos.getStepName());
+            if(humanTaskInfosList.isEmpty()){
+                return humanTaskInfosRepository.save(humanTaskInfos);
+            }
+        }
+        return humanTaskInfosRepository.save(humanTaskInfos);
+    }
+
+    @Override
+    public void saveAll(List<HumanTaskInfos> humanTaskInfos){
+        humanTaskInfos.forEach(humanTaskInfo -> {
+            if (humanTaskInfo.getIsImplicitStart()){
+                List<HumanTaskInfos> humanTaskInfosList = humanTaskInfosRepository.findByProcessNameAndStepNameAndActiveTrue(humanTaskInfo.getProcessName(), humanTaskInfo.getStepName());
+                if(humanTaskInfosList.isEmpty()){
+                    humanTaskInfosRepository.save(humanTaskInfo);
+
+                }
+                return;
+            }
+            humanTaskInfosRepository.save(humanTaskInfo);
+        });
+    }
 }

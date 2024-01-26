@@ -3,6 +3,7 @@ package com.ioevent.ioeventhumantaskhandlerstarter.listner;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
 import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
 import com.ioevent.ioeventhumantaskhandlerstarter.repository.HumanTaskInfosRepository;
+import com.ioevent.ioeventhumantaskhandlerstarter.service.HumanTaskInfosService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,10 +18,11 @@ import java.util.UUID;
 @Slf4j
 @Configuration
 public class EventListner {
-    private final HumanTaskInfosRepository humanTaskInfosRepository;
 
-    public EventListner(HumanTaskInfosRepository humanTaskInfosRepository) {
-        this.humanTaskInfosRepository = humanTaskInfosRepository;
+    private final HumanTaskInfosService humanTaskInfosService;
+
+    public EventListner(HumanTaskInfosService humanTaskInfosService) {
+        this.humanTaskInfosService = humanTaskInfosService;
     }
     @KafkaListener(groupId = "#{getGroupId}",id = "idTest",topics = "#{getApplicationName}", containerFactory = "kafkaListenerContainerFactory")
     public void onEvent(@Payload List<Message<byte[]>> messages){
@@ -42,17 +44,18 @@ public class EventListner {
                     .isImplicitStart((Boolean) message.getHeaders().get(IOEventHeaders.IMPLICIT_START.toString()))
                     .isImplicitEnd((Boolean) message.getHeaders().get(IOEventHeaders.IMPLICIT_END.toString()))
                     .active(true)
-                    .outputs((Map<String, String>) message.getHeaders().get("OUTPUTS"))
-                    .appName(message.getHeaders().get("APPNAME").toString())
-                    .input((List<String>) message.getHeaders().get(IOEventHeaders.INPUT.toString()))
+                    //.outputs((Map<String, String>) message.getHeaders().get("OUTPUTS"))
+                    //.appName(message.getHeaders().get("APPNAME").toString())
+                    //.input((List<String>) message.getHeaders().get(IOEventHeaders.INPUT.toString()))
+                    .outputEvent(message.getHeaders().get(IOEventHeaders.OUTPUT_EVENT.toString()).toString())
                     .payload(new String(message.getPayload()))
                     .rawPayload(message.getPayload())
                     .build();
             log.info("human task received : {}", humanTaskInfos);
             humanTaskInfosList.add(humanTaskInfos);
         });
+        humanTaskInfosService.saveAll(humanTaskInfosList);
 
-     humanTaskInfosRepository.saveAll(humanTaskInfosList);
     }
 
 }

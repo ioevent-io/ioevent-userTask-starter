@@ -20,6 +20,7 @@ public class HumanTaskInfos {
     private String correlationId;
     private String eventType;
     private List<String> input;
+    private String outputEvent;
     private Map<String ,String> outputs;
     private String stepName;
     private String apiKey;
