@@ -28,30 +28,9 @@ public class MessageProducerServiceImpl implements MessageProducerService{
 
     @Value("${ioevent.prefix:}")
     private String prefix;
-    /*@Override
-    public String sendMessage(String id, Object payload, Map<String, String> customHeaders, String outputString) {
-        Optional<HumanTaskInfos> humanTaskInfos = humanTaskInfosService.getById(id);
-        HumanTaskInfos humanTaskInfosToSend = new HumanTaskInfos();
-        if(humanTaskInfos.isPresent()){
-            humanTaskInfosToSend = humanTaskInfos.get();
-        }
-
-        HumanTaskInfos finalHumanTaskInfosToSend = humanTaskInfosToSend;
-        kafkaTemplate.executeInTransaction(t -> {
-            finalHumanTaskInfosToSend.getOutputs().keySet().forEach(
-                    i -> kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, finalHumanTaskInfosToSend.getOutputs().get(i), i, customHeaders, outputString))
-
-            );
-            return "Event sent successfully";
-        });
-
-        humanTaskInfosService.deactivateHumanTask(id);
-
-        return "Event sent successfully";
-    }*/
 
     @Override
-    public String sendMessage(String id, Object payload, Map<String, String> customHeaders, String outputString) {
+    public String sendMessage(final String id,final Object payload,final Map<String, String> customHeaders) {
         Optional<HumanTaskInfos> humanTaskInfos = humanTaskInfosService.getById(id);
         HumanTaskInfos humanTaskInfosToSend = new HumanTaskInfos();
         if(humanTaskInfos.isPresent()){
@@ -63,7 +42,7 @@ public class MessageProducerServiceImpl implements MessageProducerService{
         if(finalHumanTaskInfosToSend.getIsImplicitStart()){
             outputEvent = finalHumanTaskInfosToSend.getStepName()+"-human";
         }
-        kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-human-task-Response", outputEvent, customHeaders, outputString));
+        kafkaTemplate.send(buildMessage(finalHumanTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-human-task-Response", outputEvent, customHeaders));
         humanTaskInfosService.deactivateHumanTask(id);
 
         return "Event sent successfully";
@@ -72,7 +51,7 @@ public class MessageProducerServiceImpl implements MessageProducerService{
 
 
 
-    private Message<Object> buildMessage(HumanTaskInfos humanTaskInfos, Object payload,String topic, String key, Map<String, String> customHeaders, String outputString) {
+    private Message<Object> buildMessage(final HumanTaskInfos humanTaskInfos,final Object payload,final String topic,final String key,final Map<String, String> customHeaders) {
         return MessageBuilder
                 .withPayload(payload)
                 .copyHeaders(customHeaders)
