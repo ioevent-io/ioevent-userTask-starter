@@ -41,7 +41,7 @@ public class EventListener {
                     .payload(new String(message.getPayload()))
                     .rawPayload(message.getPayload())
                     .build();
-            log.info("human task received : {}", userTaskInfos);
+            log.info("user task received : {}", userTaskInfos);
             userTaskInfosList.add(userTaskInfos);
         });
         userTaskInfosService.saveAll(userTaskInfosList);

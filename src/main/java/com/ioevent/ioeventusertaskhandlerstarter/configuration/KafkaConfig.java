@@ -29,7 +29,7 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, byte[]> consumerFactory() {
         Map<String,Object> configProps = kafkaProperties.buildConsumerProperties();
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-humantask-handler");
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-usertask-handler");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class);
         configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
@@ -43,7 +43,7 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, UserTaskInfos> consumerFactory2() {
         Map<String,Object> configProps = kafkaProperties.buildConsumerProperties();
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-humantask-handler1");
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-usertask-handler1");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, 1000);
@@ -58,9 +58,6 @@ public class KafkaConfig {
         Map<String,Object> configProps = kafkaProperties.buildProducerProperties();
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-
-        //configProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "ioevent-humantask-handler");
-        //configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }

@@ -10,7 +10,7 @@ public class SwaggerConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("public")
-                .packagesToScan("com.ioevent.ioeventhumantaskhandlerstarter.rest")
+                .packagesToScan("com.ioevent.ioeventusertaskhandlerstarter.rest")
                 .build();
     }
 }

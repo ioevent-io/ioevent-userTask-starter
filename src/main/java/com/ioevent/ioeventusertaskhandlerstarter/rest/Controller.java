@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/ioevent/human-task-infos")
+@RequestMapping("/api/ioevent/user-task-infos")
 @Slf4j
 public class Controller {
     @Autowired
@@ -23,25 +23,25 @@ public class Controller {
     @Autowired
     private MessageProducerService messageProducerService;
 
-    @Operation(summary = "Get all waiting human tasks for all workflows ")
+    @Operation(summary = "Get all waiting user tasks for all workflows ")
     @GetMapping("/waiting-tasks")
-    public List<UserTaskInfosDto> getAllWaitingHumanTasks() {
+    public List<UserTaskInfosDto> getAllWaitingUserTasks() {
         return userTaskInfosService.getAll().stream().map(UserTaskInfosDto::toDto).toList();
     }
 
-    @Operation(summary = "Get all waiting human tasks for a specific workflow by giving the workflow name")
+    @Operation(summary = "Get all waiting user tasks for a specific workflow by giving the workflow name")
     @GetMapping("/waiting-tasks/{processName}")
-    public List<UserTaskInfosDto> getAllWaitingHumanTasksByProcessName(@PathVariable String processName) {
+    public List<UserTaskInfosDto> getAllWaitingUserTasksByProcessName(@PathVariable String processName) {
         return userTaskInfosService.getByProcessNameAndActiveTrue(processName).stream().map(UserTaskInfosDto::toDto).toList();
     }
 
-    @Operation(summary = "Get a waiting human task by giving the id")
+    @Operation(summary = "Get a waiting user task by giving the id")
     @GetMapping("/waiting-task")
-    public UserTaskInfosDto getHumanTaskById(@RequestParam String id) {
+    public UserTaskInfosDto getUserTaskById(@RequestParam String id) {
         return UserTaskInfosDto.toDto(Objects.requireNonNull(userTaskInfosService.getById(id).orElse(null)));
     }
 
-    @Operation(summary = "Finishing a waiting human task by giving the id and the payload as a required parameters " +
+    @Operation(summary = "Finishing a waiting user task by giving the id and the payload as a required parameters " +
             "and the customHeaders and the outputString as optional parameters")
     @PostMapping("/complete-task")
     public String resumeUserTask(@RequestParam String id,@RequestBody Object payload,@RequestPart(value = "customHeaders",required = false) Map<String,String> customHeaders) {

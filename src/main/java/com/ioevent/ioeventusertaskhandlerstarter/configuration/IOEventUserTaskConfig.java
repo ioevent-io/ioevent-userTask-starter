@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @EnableKafka
 @Service
 @RequiredArgsConstructor
-@EnableElasticsearchRepositories(basePackages = "com.ioevent.ioeventhumantaskhandlerstarter.repository")
+@EnableElasticsearchRepositories(basePackages = "com.ioevent.ioeventusertaskhandlerstarter.repository")
 @Import({KafkaConfig.class, ElasticConfig.class, EventListener.class, SwaggerConfig.class})
 public class IOEventUserTaskConfig {
     @Value("${ioevent.application_name:}")
@@ -49,7 +49,7 @@ public class IOEventUserTaskConfig {
     }
 
     @Bean
-    public UserTaskInfosService humanTaskInfosService() {
+    public UserTaskInfosService userTaskInfosService() {
         return new UserTaskInfosServiceImpl(userTaskInfosRepository);
     }
 
