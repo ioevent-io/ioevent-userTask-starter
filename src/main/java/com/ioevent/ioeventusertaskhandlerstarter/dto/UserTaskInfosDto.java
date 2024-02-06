@@ -1,7 +1,7 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.dto;
+package com.ioevent.ioeventusertaskhandlerstarter.dto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
+import com.ioevent.ioeventusertaskhandlerstarter.domain.UserTaskInfos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HumanTaskInfosDto {
+public class UserTaskInfosDto {
     private String id;
     private String processName;
     private String correlationId;
@@ -23,15 +23,15 @@ public class HumanTaskInfosDto {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static HumanTaskInfosDto toDto(HumanTaskInfos humanTaskInfos) {
-        Object deserializedObject = deserialize(humanTaskInfos.getRawPayload());
+    public static UserTaskInfosDto toDto(UserTaskInfos userTaskInfos) {
+        Object deserializedObject = deserialize(userTaskInfos.getRawPayload());
 
-        return new HumanTaskInfosDto(
-                humanTaskInfos.getId(),
-                humanTaskInfos.getProcessName(),
-                humanTaskInfos.getCorrelationId(),
-                humanTaskInfos.getStartTime(),
-                humanTaskInfos.getPayload(),
+        return new UserTaskInfosDto(
+                userTaskInfos.getId(),
+                userTaskInfos.getProcessName(),
+                userTaskInfos.getCorrelationId(),
+                userTaskInfos.getStartTime(),
+                userTaskInfos.getPayload(),
                 deserializedObject
         );
     }

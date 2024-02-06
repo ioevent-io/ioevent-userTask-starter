@@ -1,4 +1,4 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.configuration.swagger;
+package com.ioevent.ioeventusertaskhandlerstarter.configuration.swagger;
 
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ public class SwaggerConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("public")
-                .packagesToScan("com.ioevent.ioeventhumantaskhandlerstarter.rest")
+                .packagesToScan("com.ioevent.ioeventusertaskhandlerstarter.rest")
                 .build();
     }
 }

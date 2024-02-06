@@ -1,8 +1,8 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.listner;
+package com.ioevent.ioeventusertaskhandlerstarter.listner;
 
-import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
-import com.ioevent.ioeventhumantaskhandlerstarter.domain.IOEventHeaders;
-import com.ioevent.ioeventhumantaskhandlerstarter.service.HumanTaskInfosService;
+import com.ioevent.ioeventusertaskhandlerstarter.domain.UserTaskInfos;
+import com.ioevent.ioeventusertaskhandlerstarter.domain.IOEventHeaders;
+import com.ioevent.ioeventusertaskhandlerstarter.service.UserTaskInfosService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,18 +15,18 @@ import java.util.UUID;
 
 @Slf4j
 @Configuration
-public class EventListner {
+public class EventListener {
 
-    private final HumanTaskInfosService humanTaskInfosService;
+    private final UserTaskInfosService userTaskInfosService;
 
-    public EventListner(HumanTaskInfosService humanTaskInfosService) {
-        this.humanTaskInfosService = humanTaskInfosService;
+    public EventListener(UserTaskInfosService userTaskInfosService) {
+        this.userTaskInfosService = userTaskInfosService;
     }
     @KafkaListener(groupId = "#{getGroupId}",id = "idTest",topics = "#{getApplicationName}", containerFactory = "kafkaListenerContainerFactory")
     public void onEvent(@Payload List<Message<byte[]>> messages){
-        List<HumanTaskInfos> humanTaskInfosList = new ArrayList<>();
+        List<UserTaskInfos> userTaskInfosList = new ArrayList<>();
         messages.forEach(message -> {
-            HumanTaskInfos humanTaskInfos = HumanTaskInfos.builder().id(UUID.randomUUID().toString())
+            UserTaskInfos userTaskInfos = UserTaskInfos.builder().id(UUID.randomUUID().toString())
                     .processName(message.getHeaders().get(IOEventHeaders.PROCESS_NAME.toString()).toString())
                     .correlationId(message.getHeaders().get(IOEventHeaders.CORRELATION_ID.toString()).toString())
                     .eventType(message.getHeaders().get(IOEventHeaders.EVENT_TYPE.toString()).toString())
@@ -41,10 +41,10 @@ public class EventListner {
                     .payload(new String(message.getPayload()))
                     .rawPayload(message.getPayload())
                     .build();
-            log.info("human task received : {}", humanTaskInfos);
-            humanTaskInfosList.add(humanTaskInfos);
+            log.info("user task received : {}", userTaskInfos);
+            userTaskInfosList.add(userTaskInfos);
         });
-        humanTaskInfosService.saveAll(humanTaskInfosList);
+        userTaskInfosService.saveAll(userTaskInfosList);
 
     }
 

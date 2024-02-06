@@ -1,4 +1,4 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.domain;
+package com.ioevent.ioeventusertaskhandlerstarter.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -11,8 +11,8 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @Builder
-@Document(indexName = "#{@environment.getProperty('servers.elasticsearch.prefix','')}human-task")
-public class HumanTaskInfos {
+@Document(indexName = "#{@environment.getProperty('servers.elasticsearch.prefix','')}user-task")
+public class UserTaskInfos {
     @Id
     private String id;
     private String appName;
@@ -34,6 +34,4 @@ public class HumanTaskInfos {
     private byte[] rawPayload;
     @Builder.Default
     private Boolean active= true;
-    //private String outputEvent;
-    //private String sourceTopic;
 }

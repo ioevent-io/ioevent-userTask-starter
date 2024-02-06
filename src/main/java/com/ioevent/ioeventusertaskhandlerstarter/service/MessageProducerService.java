@@ -1,4 +1,4 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.service;
+package com.ioevent.ioeventusertaskhandlerstarter.service;
 
 import java.util.Map;
 
