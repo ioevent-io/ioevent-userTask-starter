@@ -51,4 +51,15 @@ public class Controller {
         return messageProducerService.sendMessage(id, payload,customHeaders);
     }
 
+    @Operation(summary = "Deactivating all waiting user tasks (of all types)")
+    @PostMapping("/purgeAll")
+    public void purgeAll() {
+        userTaskInfosService.purgeAll();
+    }
+
+    @Operation(summary = "Deactivating a waiting user task which is an implicit start by giving the id")
+    @PostMapping("/desactivateImplicitStartUserTask")
+    public void desactivateImplicitStartUserTask(@RequestParam String id) {
+        userTaskInfosService.desactivateImplicitStartUserTask(id);
+    }
 }

@@ -61,4 +61,19 @@ public class UserTaskInfosServiceImpl implements UserTaskInfosService {
             userTaskInfosRepository.save(userTaskInfo);
         });
     }
+
+    @Override
+    public void purgeAll(){
+        List<UserTaskInfos> userTaskInfos = userTaskInfosRepository.findAllByActiveTrue();
+        userTaskInfos.forEach(userTaskInfo -> this.deactivateUserTask(userTaskInfo.getId()));
+    }
+
+    @Override
+    public void desactivateImplicitStartUserTask(String id){
+        Optional<UserTaskInfos> userTaskInfos = userTaskInfosRepository.findByIdAndActiveTrue(id);
+        if(userTaskInfos.isPresent() && userTaskInfos.get().getIsImplicitStart()){
+            userTaskInfos.get().setActive(false);
+            userTaskInfosRepository.save(userTaskInfos.get());
+        }
+    }
 }

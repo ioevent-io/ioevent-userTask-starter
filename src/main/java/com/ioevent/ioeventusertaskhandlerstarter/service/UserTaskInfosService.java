@@ -16,4 +16,8 @@ public interface UserTaskInfosService {
     UserTaskInfos save(UserTaskInfos userTaskInfos);
 
     void saveAll(List<UserTaskInfos> userTaskInfos);
+
+    void purgeAll();
+
+    void desactivateImplicitStartUserTask(String id);
 }
