@@ -31,20 +31,20 @@ public class MessageProducerServiceImpl implements MessageProducerService{
 
     @Override
     public String sendMessage(final String id,final Object payload,final Map<String, String> customHeaders) {
-        Optional<UserTaskInfos> humanTaskInfos = userTaskInfosService.getById(id);
+        Optional<UserTaskInfos> userTaskInfos = userTaskInfosService.getById(id);
         UserTaskInfos userTaskInfosToSend = new UserTaskInfos();
-        if(humanTaskInfos.isPresent()){
-            userTaskInfosToSend = humanTaskInfos.get();
+        if(userTaskInfos.isPresent()){
+            userTaskInfosToSend = userTaskInfos.get();
         }
 
         UserTaskInfos finalUserTaskInfosToSend = userTaskInfosToSend;
-        String outputEvent = finalUserTaskInfosToSend.getOutputEvent()+"-human";
+        String outputEvent = finalUserTaskInfosToSend.getOutputEvent()+"-user";
         if(finalUserTaskInfosToSend.getIsImplicitStart()){
-            outputEvent = finalUserTaskInfosToSend.getStepName()+"-human";
+            outputEvent = finalUserTaskInfosToSend.getStepName()+"-user";
         }
-        kafkaTemplate.send(buildMessage(finalUserTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-human-task-Response", outputEvent, customHeaders));
+        kafkaTemplate.send(buildMessage(finalUserTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-user-task-Response", outputEvent, customHeaders));
         if(!finalUserTaskInfosToSend.getIsImplicitStart()){
-            userTaskInfosService.deactivateHumanTask(id);
+            userTaskInfosService.deactivateUserTask(id);
         }
         return "Event sent successfully";
     }

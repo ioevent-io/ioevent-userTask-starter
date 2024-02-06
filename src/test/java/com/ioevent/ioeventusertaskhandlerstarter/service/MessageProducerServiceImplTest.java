@@ -33,7 +33,7 @@ class MessageProducerServiceImplTest {
     }
 
     @Test
-    void testSendMessageWhenHumanTaskInfosIsPresentAndNotImplicitStart(){
+    void testSendMessageWhenUserTaskInfosIsPresentAndNotImplicitStart(){
         UserTaskInfos userTaskInfos = new UserTaskInfos("1", "appName", "processName", "1111", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, false, false, "payload", new byte[0], true);
         CompletableFuture<SendResult<String, Object>> future = new CompletableFuture<>();
 
@@ -46,7 +46,7 @@ class MessageProducerServiceImplTest {
     }
 
     @Test
-    void testSendMessageWhenHumanTaskInfosIsPresentAndImplicitStart(){
+    void testSendMessageWhenUserTaskInfosIsPresentAndImplicitStart(){
         UserTaskInfos userTaskInfos = new UserTaskInfos("1", "appName", "processName", "1111", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, true, false, "payload", new byte[0], true);
         CompletableFuture<SendResult<String, Object>> future = new CompletableFuture<>();
 

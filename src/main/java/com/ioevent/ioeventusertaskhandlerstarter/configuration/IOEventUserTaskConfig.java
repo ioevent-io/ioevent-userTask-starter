@@ -40,7 +40,7 @@ public class IOEventUserTaskConfig {
     }
     @Bean
     String getApplicationName() {
-        return prefix+"-"+applicationName+"_"+"ioevent-human-task";
+        return prefix+"-"+applicationName+"_"+"ioevent-user-task";
     }
 
     @Bean

@@ -60,10 +60,10 @@ class UserTaskInfosServiceImplTest {
     }
 
     @Test
-    void deactivateHumanTask() {
+    void deactivateUserTask() {
         UserTaskInfos userTaskInfos = new UserTaskInfos("1", "appName", "processName", "1111", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, false, false, "payload", new byte[0], true);
         when(userTaskInfosRepository.findByIdAndActiveTrue("1")).thenReturn(Optional.of(userTaskInfos));
-        userTaskInfosServiceImpl.deactivateHumanTask("1");
+        userTaskInfosServiceImpl.deactivateUserTask("1");
         assertEquals(false,userTaskInfos.getActive());
     }
 

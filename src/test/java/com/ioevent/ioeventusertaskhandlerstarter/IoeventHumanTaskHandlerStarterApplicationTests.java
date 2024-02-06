@@ -1,7 +1,7 @@
 package com.ioevent.ioeventusertaskhandlerstarter;
 
 //@SpringBootTest
-class IoeventHumanTaskHandlerStarterApplicationTests {
+class IoeventUserTaskHandlerStarterApplicationTests {
 
 //	@Test
 	void contextLoads() {

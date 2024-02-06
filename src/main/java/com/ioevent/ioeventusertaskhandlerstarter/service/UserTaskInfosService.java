@@ -11,7 +11,7 @@ public interface UserTaskInfosService {
     Optional<UserTaskInfos> getById(String id);
 
     List<UserTaskInfos> getByProcessNameAndActiveTrue(String processName);
-    void deactivateHumanTask(String id);
+    void deactivateUserTask(String id);
 
     UserTaskInfos save(UserTaskInfos userTaskInfos);
 

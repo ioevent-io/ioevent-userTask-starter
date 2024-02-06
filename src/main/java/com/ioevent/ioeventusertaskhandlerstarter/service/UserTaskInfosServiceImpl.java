@@ -29,11 +29,11 @@ public class UserTaskInfosServiceImpl implements UserTaskInfosService {
         return userTaskInfosRepository.findByProcessNameAndActiveTrue(processName);
     }
     @Override
-    public void deactivateHumanTask(final String id){
-        Optional<UserTaskInfos> humanTaskInfos = userTaskInfosRepository.findByIdAndActiveTrue(id);
-        if(humanTaskInfos.isPresent()){
-            humanTaskInfos.get().setActive(false);
-            userTaskInfosRepository.save(humanTaskInfos.get());
+    public void deactivateUserTask(final String id){
+        Optional<UserTaskInfos> userTaskInfos = userTaskInfosRepository.findByIdAndActiveTrue(id);
+        if(userTaskInfos.isPresent()){
+            userTaskInfos.get().setActive(false);
+            userTaskInfosRepository.save(userTaskInfos.get());
         }
     }
     @Override
@@ -49,16 +49,16 @@ public class UserTaskInfosServiceImpl implements UserTaskInfosService {
 
     @Override
     public void saveAll(final List<UserTaskInfos> userTaskInfos){
-        userTaskInfos.forEach(humanTaskInfo -> {
-            if (humanTaskInfo.getIsImplicitStart()){
-                List<UserTaskInfos> userTaskInfosList = userTaskInfosRepository.findByProcessNameAndStepNameAndActiveTrue(humanTaskInfo.getProcessName(), humanTaskInfo.getStepName());
+        userTaskInfos.forEach(userTaskInfo -> {
+            if (userTaskInfo.getIsImplicitStart()){
+                List<UserTaskInfos> userTaskInfosList = userTaskInfosRepository.findByProcessNameAndStepNameAndActiveTrue(userTaskInfo.getProcessName(), userTaskInfo.getStepName());
                 if(userTaskInfosList.isEmpty()){
-                    userTaskInfosRepository.save(humanTaskInfo);
+                    userTaskInfosRepository.save(userTaskInfo);
 
                 }
                 return;
             }
-            userTaskInfosRepository.save(humanTaskInfo);
+            userTaskInfosRepository.save(userTaskInfo);
         });
     }
 }
