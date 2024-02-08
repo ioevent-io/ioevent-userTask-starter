@@ -1,6 +1,6 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.annotation;
+package com.ioevent.ioeventusertaskhandlerstarter.annotation;
 
-import com.ioevent.ioeventhumantaskhandlerstarter.configuration.IOEventHumanTaskConfig;
+import com.ioevent.ioeventusertaskhandlerstarter.configuration.IOEventUserTaskConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(IOEventHumanTaskConfig.class)
-public @interface EnableIOEventHumanTask {
+@Import(IOEventUserTaskConfig.class)
+public @interface EnableIOEventUserTask {
 
 }

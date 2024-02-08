@@ -1,4 +1,4 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.configuration;
+package com.ioevent.ioeventusertaskhandlerstarter.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

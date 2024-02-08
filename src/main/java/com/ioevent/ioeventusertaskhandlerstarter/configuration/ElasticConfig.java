@@ -1,4 +1,4 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.configuration;
+package com.ioevent.ioeventusertaskhandlerstarter.configuration;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;

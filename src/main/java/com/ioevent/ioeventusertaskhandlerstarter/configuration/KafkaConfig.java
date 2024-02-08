@@ -1,6 +1,6 @@
-package com.ioevent.ioeventhumantaskhandlerstarter.configuration;
+package com.ioevent.ioeventusertaskhandlerstarter.configuration;
 
-import com.ioevent.ioeventhumantaskhandlerstarter.domain.HumanTaskInfos;
+import com.ioevent.ioeventusertaskhandlerstarter.domain.UserTaskInfos;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
@@ -29,7 +29,7 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, byte[]> consumerFactory() {
         Map<String,Object> configProps = kafkaProperties.buildConsumerProperties();
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-humantask-handler");
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-usertask-handler");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class);
         configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
@@ -41,9 +41,9 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, HumanTaskInfos> consumerFactory2() {
+    public ConsumerFactory<String, UserTaskInfos> consumerFactory2() {
         Map<String,Object> configProps = kafkaProperties.buildConsumerProperties();
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-humantask-handler1");
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "ioevent-usertask-handler1");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, 1000);
@@ -77,8 +77,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, HumanTaskInfos> kafkaListenerContainerFactory2() {
-        ConcurrentKafkaListenerContainerFactory<String, HumanTaskInfos> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, UserTaskInfos> kafkaListenerContainerFactory2() {
+        ConcurrentKafkaListenerContainerFactory<String, UserTaskInfos> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory2());
         factory.setBatchListener(true);
         factory.setCommonErrorHandler(new CommonErrorHandler() {});
