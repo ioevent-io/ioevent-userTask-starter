@@ -198,7 +198,6 @@
 
 	<licenses>
 		<license>
-
 			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
@@ -222,9 +221,9 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/ioevent-io/ioevent-human-task-handler-starter/tree/master</url>
-		<connection>scm:git:git://github.com:ioevent-io/ioevent-human-task-handler-starter.git</connection>
-		<developerConnection>scm:git:ssh://github.com:ioevent-io/ioevent-human-task-handler-starter.git</developerConnection>
+		<url>https://github.com/ioevent-io/ioevent-userTask-starter/tree/master</url>
+		<connection>scm:git:git://github.com:ioevent-io/ioevent-userTask-starter.git</connection>
+		<developerConnection>scm:git:ssh://github.com:ioevent-io/ioevent-userTask-starter.git</developerConnection>
 	</scm>
 
 	<distributionManagement>
