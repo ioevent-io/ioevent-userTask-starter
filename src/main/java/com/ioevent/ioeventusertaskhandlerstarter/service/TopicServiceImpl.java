@@ -30,7 +30,9 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public void createUserTaskTopics(String appName, String prefix, int partition, String replication) {
-        client.createTopics(Arrays.asList(new NewTopic(prefix+"-"+appName+"_"+"ioevent-user-task", partition, Short.parseShort(replication)),
-                new NewTopic(prefix+"-"+appName+"_"+"ioevent-user-task-Response", partition, Short.parseShort(replication))));
+        String prefixTopic = prefix.isEmpty() ? "" : prefix+"-";
+        NewTopic userTaskRequest = new NewTopic(prefixTopic+appName+"_"+"ioevent-user-task", partition, Short.parseShort(replication));
+        NewTopic userTaskResponse = new NewTopic(prefixTopic+appName+"_"+"ioevent-user-task-Response", partition, Short.parseShort(replication));
+        client.createTopics(Arrays.asList(userTaskRequest, userTaskResponse));
     }
 }

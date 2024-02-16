@@ -55,13 +55,9 @@ public class MessageProducerServiceImpl implements MessageProducerService{
 
         UserTaskInfos finalUserTaskInfosToSend = userTaskInfosToSend;
         String outputEvent = finalUserTaskInfosToSend.getOutputEvent()+"-user";
-        /*if(finalUserTaskInfosToSend.getIsImplicitStart()){
-            outputEvent = finalUserTaskInfosToSend.getStepName()+"-user";
-        }*/
-        kafkaTemplate.send(buildMessage(finalUserTaskInfosToSend, payload, prefix+"-"+applicationName+"_"+"ioevent-user-task-Response", outputEvent, customHeaders));
-        //if(!finalUserTaskInfosToSend.getIsImplicitStart()){
-            userTaskInfosService.deactivateUserTask(id);
-        //}
+        String prefixTopic = prefix.isEmpty() ? "" : prefix+"-";
+        kafkaTemplate.send(buildMessage(finalUserTaskInfosToSend, payload, prefixTopic+applicationName+"_"+"ioevent-user-task-Response", outputEvent, customHeaders));
+        userTaskInfosService.deactivateUserTask(id);
         return "Event sent successfully";
     }
 
