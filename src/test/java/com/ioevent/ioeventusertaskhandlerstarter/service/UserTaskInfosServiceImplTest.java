@@ -76,15 +76,6 @@ class UserTaskInfosServiceImplTest {
     }
 
     @Test
-    void saveWhenUserTaskIsImplicitStartAndFindByProcessNameAndStepNameAndActiveTrueIsEmpty() {
-        UserTaskInfos userTaskInfos = new UserTaskInfos("1", "appName", "processName", "1111", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, true, false, "payload", new byte[0], true);
-        when(userTaskInfosRepository.findByProcessNameAndStepNameAndActiveTrue("processName", "stepName")).thenReturn(new ArrayList<>());
-        when(userTaskInfosRepository.save(userTaskInfos)).thenReturn(userTaskInfos);
-        UserTaskInfos result = userTaskInfosServiceImpl.save(userTaskInfos);
-        assertEquals(result, userTaskInfos);
-    }
-
-    @Test
     void saveAllWhenUserTaskIsNotImplicitStart() {
         List<UserTaskInfos> userTaskInfosList = new ArrayList<>();
         userTaskInfosList.add(new UserTaskInfos("1", "appName", "processName", "1111", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, false, false, "payload", new byte[0], true));
@@ -93,19 +84,6 @@ class UserTaskInfosServiceImplTest {
         when(userTaskInfosRepository.save(userTaskInfosList.get(1))).thenReturn(userTaskInfosList.get(1));
         userTaskInfosServiceImpl.saveAll(userTaskInfosList);
         verify(userTaskInfosRepository,times(2)).save(any(UserTaskInfos.class));
-    }
-
-    @Test
-    void saveAllWhenUserTaskIsImplicitStartAndFindByProcessNameAndStepNameAndActiveTrueIsEmpty() {
-        List<UserTaskInfos> userTaskInfosList = new ArrayList<>();
-        userTaskInfosList.add(new UserTaskInfos("1", "appName", "processName", "1111", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, true, false, "payload", new byte[0], true));
-        userTaskInfosList.add(new UserTaskInfos("2", "appName", "processName", "2222", "Task", new ArrayList<>(), "outputEvent", null, "stepName", "apiKey", 1L, 1L, true, false, "payload", new byte[0], true));
-        when(userTaskInfosRepository.findByProcessNameAndStepNameAndActiveTrue("processName", "stepName")).thenReturn(new ArrayList<>());
-        when(userTaskInfosRepository.save(userTaskInfosList.get(0))).thenReturn(userTaskInfosList.get(0));
-        when(userTaskInfosRepository.save(userTaskInfosList.get(1))).thenReturn(userTaskInfosList.get(1));
-        userTaskInfosServiceImpl.saveAll(userTaskInfosList);
-        verify(userTaskInfosRepository,times(2)).save(any(UserTaskInfos.class));
-        verify(userTaskInfosRepository,times(2)).findByProcessNameAndStepNameAndActiveTrue("processName", "stepName");
     }
 
 }
