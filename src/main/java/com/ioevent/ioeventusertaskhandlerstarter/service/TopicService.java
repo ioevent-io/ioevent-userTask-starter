@@ -14,19 +14,8 @@
  * limitations under the License.
  */
 
-package com.ioevent.ioeventusertaskhandlerstarter.configuration.swagger;
+package com.ioevent.ioeventusertaskhandlerstarter.service;
 
-import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public class SwaggerConfig {
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("public")
-                .packagesToScan("com.ioevent.ioeventusertaskhandlerstarter.rest")
-                .build();
-    }
+public interface TopicService {
+    void createUserTaskTopics(String appName,String prefix,int partition,String replication);
 }
