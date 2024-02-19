@@ -55,7 +55,7 @@ public class IOEventUserTaskConfig {
     @Bean
     String getApplicationName() {
         String prefixTopic = prefix.isEmpty() ? "" : prefix+"-";
-        return prefixTopic+applicationName+"_"+"ioevent-user-task";
+        return prefixTopic+Utils.cleanAppName(applicationName)+"_"+"ioevent-user-task";
     }
 
     @Bean

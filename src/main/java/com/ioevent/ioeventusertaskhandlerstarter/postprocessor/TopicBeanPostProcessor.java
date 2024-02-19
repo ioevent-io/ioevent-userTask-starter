@@ -37,6 +37,7 @@ public class TopicBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
+
         if (bean instanceof TopicService) {
             ((TopicService) bean).createUserTaskTopics(applicationName, prefix, partition, replicationFactor);
         }
